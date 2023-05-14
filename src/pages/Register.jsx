@@ -2,25 +2,41 @@ import LogInImage from "../assets/images/login/login.svg";
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from "react"
 import { AuthContext } from "../provider/AuthProvider";
+import { getAuth, updateProfile } from "firebase/auth";
+import app from "../firebase/firebase.config";
 
-
+const auth = getAuth(app)
 const Register = () => {
   const [error,setError] = useState('')
-  const {  createUser } = useContext(AuthContext)
+  const {  createUser,logOut } = useContext(AuthContext)
   const navigate = useNavigate()
   const handleSignUp = (e) => {
     e.preventDefault()
     const form = e.target;
-    // const name = form.name.value;
+    const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
     createUser(email,password)
     .then((result) => {
       const  user = result.user;
-      navigate("/")
+      updateUser(name)
+      logOut()
+      .then(() => {
+        navigate("/login")
+      })
+      .catch(error => console.log(error.message))
       console.log(user)
     })
     .catch(error => setError(error.message))
+  }
+
+  const updateUser = (name) => {
+    updateProfile(auth.currentUser, {
+      displayName: name
+    }).then(() => {
+    }).catch((error) => {
+      console.log(error)
+    });
   }
   return (
     <div className="hero min-h-screen bg-base-200">
