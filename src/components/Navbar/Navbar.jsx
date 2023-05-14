@@ -11,8 +11,11 @@ const Navbar = () => {
     }
   const navItems = <>
    <li> <Link to='/'>Home</Link></li>
-    <li><Link>About</Link></li>
-    {user ? <li><a onClick={handleLogOut}>Log Out</a></li> :  <li><Link to="/login">Log In</Link></li>}
+   <li><Link>About</Link></li>
+    {user ? <>
+        <li><Link to={`/orders`}>Orders</Link></li>
+        <li><a onClick={handleLogOut}>Log Out</a></li> 
+    </>:<li><Link to="/login">Log In</Link></li>}
   </>
     return (
         <div className="bg-base-200 py-3">
