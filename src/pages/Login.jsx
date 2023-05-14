@@ -1,13 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LogInImage from '../assets/images/login/login.svg'
+import { useContext, useState } from 'react';
+import { AuthContext } from '../provider/AuthProvider';
 const Login = () => {
-
+ const {logIn} = useContext(AuthContext)
+ const [error,setError] = useState("")
+ const navigate = useNavigate()
     const handleLogin = (e) => {
      e.preventDefault()
      const form = e.target;
      const email = form.email.value;
      const password = form.password.value;
-     console.log(email,password)
+     logIn(email,password)
+     .then((result) => {
+      console.log(result.user)
+      navigate("/")
+     })
+     .catch(error => setError(error.message))
     }
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -29,6 +38,7 @@ const Login = () => {
                   <span className="label-text">Password</span>
                 </label>
                 <input type="password" placeholder="password" name='password' required className="input input-bordered" />
+                <p className="text-red-500">{error}</p>
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                 </label>
