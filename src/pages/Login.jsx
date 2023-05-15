@@ -3,6 +3,7 @@ import LogInImage from '../assets/images/login/login.svg'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
 import { createJwtToken } from '../api/api';
+import SocialLogin from '../components/SocialLogin/SocialLogin';
 const Login = () => {
  const {logIn} = useContext(AuthContext)
  const [error,setError] = useState("")
@@ -46,11 +47,12 @@ const Login = () => {
                   <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                 </label>
               </div>
-              <div className="form-control mt-6">
+              <div className="form-control">
                 <button type='submit' className="btn btn-warning">Login</button>
               </div>
             </form>
-            <p className='text-center mb-2 font-semibold'>New to this webiste ? <Link className='text-amber-500' to="/register">Sing Up</Link></p>
+            <p className='text-center  font-semibold'>New to this webiste ? <Link className='text-amber-500' to="/register">Sing Up</Link></p>
+            <SocialLogin/>
           </div>
         </div>
       </div>
