@@ -10,18 +10,13 @@ const Orders = () => {
             .then(res => res.json())
             .then(data => setOrders(data))
             .catch(error => console.log(error))
-    }, [])
+    }, [user?.email])
     return (
         <div className="overflow-x-auto md:max-w-5xl mx-auto py-24">
             <table className="table w-full">
                 {/* head */}
                 <thead>
                     <tr>
-                        <th>
-                            <label>
-                                <input type="checkbox" className="checkbox" />
-                            </label>
-                        </th>
                         <th>Image</th>
                         <th>Service Name</th>
                         <th>Name</th>
