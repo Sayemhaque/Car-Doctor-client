@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import LogInImage from '../assets/images/login/login.svg'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
+import { createJwtToken } from '../api/api';
 const Login = () => {
  const {logIn} = useContext(AuthContext)
  const [error,setError] = useState("")
@@ -11,9 +12,11 @@ const Login = () => {
      const form = e.target;
      const email = form.email.value;
      const password = form.password.value;
+     const loggedUser = {email}
      logIn(email,password)
      .then((result) => {
       console.log(result.user)
+      createJwtToken(loggedUser)
       navigate("/")
      })
      .catch(error => setError(error.message))

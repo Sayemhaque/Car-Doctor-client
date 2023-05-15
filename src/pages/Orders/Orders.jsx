@@ -1,16 +1,39 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import TableRow from './TableRow';
+import { deleteOrder } from '../../api/api';
 
 const Orders = () => {
     const { user } = useContext(AuthContext)
     const [orders, setOrders] = useState([])
+    const [error,setError] = useState("")
+
     useEffect(() => {
-        fetch(`http://localhost:3000/orders?email=${user?.email}`)
+        fetch(`http://localhost:3000/orders?email=${user?.email}`,{
+            method:"GET",
+            headers:{
+                authorization:`Bearer  ${localStorage.getItem('jwt-token')}`
+            }
+        })
             .then(res => res.json())
-            .then(data => setOrders(data))
+            .then(data => {
+                if(!data.error) {
+                    setOrders(data)
+                }
+                else{
+                    setError(data.message)
+                }
+            })
             .catch(error => console.log(error))
     }, [user?.email])
+
+    
+  const handleDeleteOrder = (id) => {
+    const proceed = confirm("Do you want to delete ?")
+    deleteOrder(id,proceed)
+    const remaining = orders.filter(order => order._id !== id)
+    setOrders(remaining)
+ }
     return (
         <div className="overflow-x-auto md:max-w-5xl mx-auto py-24">
             <table className="table w-full">
@@ -25,14 +48,13 @@ const Orders = () => {
                         <th>Delete</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     {/* row 1 */}
-                    {orders.length < 1 ? <h2 className='text-center font-bold'>No orders</h2>
+                    {error  ? <h2 className='text-center text-white bg-red-400  font-bold'>{error}</h2>
                    : 
-                   orders.map(order =>   <TableRow key={order._id} order={order}/>)    
+                   orders.map(order =>   <TableRow handleDeleteOrder={handleDeleteOrder} key={order._id} order={order}/>)    
                 }
-                  
-                </tbody>
+              </tbody>
             </table>
         </div>
     );
