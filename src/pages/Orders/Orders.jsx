@@ -9,7 +9,7 @@ const Orders = () => {
     const [error,setError] = useState("")
 
     useEffect(() => {
-        fetch(`http://localhost:3000/orders?email=${user?.email}`,{
+        fetch(`https://car-doctor-server-one-indol.vercel.app/orders?email=${user?.email}`,{
             method:"GET",
             headers:{
                 authorization:`Bearer  ${localStorage.getItem('jwt-token')}`

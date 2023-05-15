@@ -1,6 +1,6 @@
 
 const orderServiceDb = (userInfo) => {
-    fetch("http://localhost:3000/orders", {
+    fetch("https://car-doctor-server-one-indol.vercel.app/orders", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -14,7 +14,7 @@ const orderServiceDb = (userInfo) => {
 }
 
 const createJwtToken = (loggedUser) => {
-    fetch("http://localhost:3000/jwt", {
+    fetch("https://car-doctor-server-one-indol.vercel.app/jwt", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -30,7 +30,7 @@ const createJwtToken = (loggedUser) => {
 
 const deleteOrder = (id, proceed) => {
     if (proceed) {
-        fetch(`http://localhost:3000/delete/${id}`, {
+        fetch(`https://car-doctor-server-one-indol.vercel.app/delete/${id}`, {
             method: "DELETE"
         })
             .then(data => console.log(data))

@@ -6,7 +6,7 @@ const Navbar = () => {
     const {user,logOut} = useContext(AuthContext)
     const handleLogOut = () => {
         logOut()
-        .then(localStorage.removeItem('jwt-token'))
+        .then()
         .catch(error => console.log(error))
     }
   const navItems = <>
